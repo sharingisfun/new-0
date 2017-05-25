@@ -21,9 +21,9 @@ var mkdir = function(dir) {
 }
 
 var push_to_github = function() {
-      simpleGit(each_repo.folder)
+      simpleGit('.')
         .addConfig('user.name', 'Robin')
-        .addConfig('user.email', 'therobinhood@yandex.com')
+        .addConfig('user.email', 'therobinhood@users.noreply.github.com')
         .outputHandler(function(command, stdout, stderr) {
           stdout.pipe(process.stdout);
           stderr.pipe(process.stderr);
@@ -212,7 +212,7 @@ var process_html = function(body, type, url, callback) {
 
   console.log(hrefs.length)
 
-  console.log('going to write:', $.html())
+  // console.log('going to write:', $.html())
   var html_content = $.html()
   fs.writeFileSync('./pages/' + url.replace(/\//g, '_'), html_content, function(err, res) {
     // console.log('wrote file', each_content)
@@ -262,19 +262,21 @@ var fetchContent = function() {
   }
 }
 
-var erase = 'https://thepiratebay.org/recent'
-erase = erase.replace(/\//g, '_')
-fs.readFile('./existing.json', function(err, data) {
-  existing_in_kayanbu = JSON.parse(data.toString())
-  del(['pages/' + erase, 'pages/' + erase + '*']).then(paths => {
-    console.log('Deleted files and folders:\n', paths.join('\n'));
-    fs.readdir('./pages', function(err, filenames) {
-      fs.readdir('./metadata', function(err, hashes) {
-        fetched_hashes = hashes.map(each => each.replace('.json', ''))
-        // console.log(colors.green(fetched_hashes.length, 'fetched_hashes', fetched_hashes))
-        fetched_contents = filenames
-        fetchContent()
-      })
-    })
-  });
-})
+push_to_github()
+
+// var erase = 'https://thepiratebay.org/recent'
+// erase = erase.replace(/\//g, '_')
+// fs.readFile('./existing.json', function(err, data) {
+//   existing_in_kayanbu = JSON.parse(data.toString())
+//   del(['pages/' + erase, 'pages/' + erase + '*']).then(paths => {
+//     console.log('Deleted files and folders:\n', paths.join('\n'));
+//     fs.readdir('./pages', function(err, filenames) {
+//       fs.readdir('./metadata', function(err, hashes) {
+//         fetched_hashes = hashes.map(each => each.replace('.json', ''))
+//         // console.log(colors.green(fetched_hashes.length, 'fetched_hashes', fetched_hashes))
+//         fetched_contents = filenames
+//         fetchContent()
+//       })
+//     })
+//   });
+// })
