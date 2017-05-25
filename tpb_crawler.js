@@ -29,9 +29,9 @@ var push_to_github = function() {
           stderr.pipe(process.stderr);
         })
         .add('./*')
-        .commit('TPB crawler update')
+        .commit('Automatic TPB crawler update')
         .push('origin', 'master').then(function() {
-          console.log('pushed ' + each_repo.folder + ' successfully.')
+          console.log('pushed tpb crawling updates successfully.')
         })
 }
 
@@ -224,15 +224,17 @@ var process_html = function(body, type, url, callback) {
 var got_repeated = false
 var tbppage = 0
 var fetchContent = function() {
-  if (got_repeated == false && contents.length == 0 && tbppage < 50) {
+  if (got_repeated == false && contents.length == 0 && tbppage < 35) {
     contents.push({ type: 'index', url: 'https://thepiratebay.org/recent/' + tbppage })
     tbppage++
-  } else {
-    if (tbppage == 50) {
+    if (tbppage == 34) {
       console.log(colors.green('Finished updating with TPB!'), got_repeated, contents.length, tbppage)
       push_to_github()
     }
+  } else {
+
   }
+  if(tbppage < 34){
   console.log(colors.green('Status:'), got_repeated, contents.length, tbppage)
 
   var each_content = contents.pop()
@@ -260,23 +262,24 @@ var fetchContent = function() {
         })
       })
   }
+  }
 }
 
-push_to_github()
+// push_to_github()
 
-// var erase = 'https://thepiratebay.org/recent'
-// erase = erase.replace(/\//g, '_')
-// fs.readFile('./existing.json', function(err, data) {
-//   existing_in_kayanbu = JSON.parse(data.toString())
-//   del(['pages/' + erase, 'pages/' + erase + '*']).then(paths => {
-//     console.log('Deleted files and folders:\n', paths.join('\n'));
-//     fs.readdir('./pages', function(err, filenames) {
-//       fs.readdir('./metadata', function(err, hashes) {
-//         fetched_hashes = hashes.map(each => each.replace('.json', ''))
-//         // console.log(colors.green(fetched_hashes.length, 'fetched_hashes', fetched_hashes))
-//         fetched_contents = filenames
-//         fetchContent()
-//       })
-//     })
-//   });
-// })
+var erase = 'https://thepiratebay.org/recent'
+erase = erase.replace(/\//g, '_')
+fs.readFile('./existing.json', function(err, data) {
+  existing_in_kayanbu = JSON.parse(data.toString())
+  // del(['pages/' + erase, 'pages/' + erase + '*']).then(paths => {
+    // console.log('Deleted files and folders:\n', paths.join('\n'));
+    fs.readdir('./pages', function(err, filenames) {
+      fs.readdir('./metadata', function(err, hashes) {
+        fetched_hashes = hashes.map(each => each.replace('.json', ''))
+        // console.log(colors.green(fetched_hashes.length, 'fetched_hashes', fetched_hashes))
+        fetched_contents = filenames
+        fetchContent()
+      })
+    // })
+  });
+})
