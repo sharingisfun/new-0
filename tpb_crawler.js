@@ -271,7 +271,7 @@ var erase = 'https://thepiratebay.org/recent'
 erase = erase.replace(/\//g, '_')
 fs.readFile('./existing.json', function(err, data) {
   existing_in_kayanbu = JSON.parse(data.toString())
-  // del(['pages/' + erase, 'pages/' + erase + '*']).then(paths => {
+  del(['pages/' + erase, 'pages/' + erase + '*']).then(paths => {
     // console.log('Deleted files and folders:\n', paths.join('\n'));
     fs.readdir('./pages', function(err, filenames) {
       fs.readdir('./metadata', function(err, hashes) {
@@ -280,6 +280,6 @@ fs.readFile('./existing.json', function(err, data) {
         fetched_contents = filenames
         fetchContent()
       })
-    // })
+    })
   });
 })
