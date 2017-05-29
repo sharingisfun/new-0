@@ -265,8 +265,8 @@ var fetchContent = function() {
   }
 }
 
-// push_to_github()
-
+push_to_github()
+if(false){
 var erase = 'https://thepiratebay.org/recent'
 erase = erase.replace(/\//g, '_')
 fs.readFile('./existing.json', function(err, data) {
@@ -283,3 +283,4 @@ fs.readFile('./existing.json', function(err, data) {
     })
   });
 })
+}
