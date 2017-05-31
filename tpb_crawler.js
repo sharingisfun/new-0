@@ -1,4 +1,5 @@
 'strict'
+process.chdir('/root/new-0/');
 var request = require('request')
 var cheerio = require('cheerio')
 var colors = require('colors')
@@ -265,8 +266,8 @@ var fetchContent = function() {
   }
 }
 
-push_to_github()
-if(false){
+// push_to_github()
+if(true){
 var erase = 'https://thepiratebay.org/recent'
 erase = erase.replace(/\//g, '_')
 fs.readFile('./existing.json', function(err, data) {
